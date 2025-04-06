@@ -1,0 +1,7 @@
+# json file that stores user shortcuts
+stored_shortcuts.json
+
+# Build results
+build/
+dist/
+*.spec
