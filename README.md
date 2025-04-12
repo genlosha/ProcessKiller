@@ -7,7 +7,7 @@ A Python-based CLI tool that allows you to **assign global keyboard shortcuts to
 
 ## 🛠 Requirements to build
 
-- Python 3.7+
+- Python 3.9+
 - [`psutil`](https://pypi.org/project/psutil/)
 - [`pynput`](https://pypi.org/project/pynput/)
 
