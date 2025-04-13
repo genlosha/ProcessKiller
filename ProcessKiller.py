@@ -82,11 +82,29 @@ def input_confirm(prompt):
             print('Invalid input! Try again!')
 
 
+# turn input string to list of strings (no check for int here)
+def input_to_numbers(input):
+    input_numbers = [] # list to store number
+    current_number = '' # current number
+    for character in input: # goes through each char of input
+        if character == ' ': # pass empty spaces
+            pass
+        elif character == ',': # for each ,
+            input_numbers.append(current_number) # add current number to list
+            current_number = '' # clear current number
+        else:
+            current_number += character # add current char to current number
+    if current_number != '': # if current number is not empty
+        input_numbers.append(current_number) # add last number to list
+    return input_numbers
+
+
 # get a shortcut from input and assign it
 def input_shortcut_assign():
     # select the processes
     selected_processes = [] # empty array to store selected processes
     while True:
+        os.system('clear||cls') # to clear the terminal
         if selected_processes != []: # if selected processes not empty
             print('\nSelected processes:')
             for i, item in enumerate(selected_processes, start=1): # goes through the list to add indexes to the output
@@ -115,42 +133,46 @@ def input_shortcut_assign():
                     for i, item in enumerate(found_processes, start=1): # goes through the list to add indexes to the output
                         print(f'{i}. {item}')  # print all found processes
                     while True:
-                        input_process = input('\nEnter process number to add it to selected, blank to continue: ') # get process input
+                        input_process = input('\nEnter process numbers to select (separated by commas), blank to continue: ') # get process input
                         if input_process == '': # if blank continue to next search
                             break
-                        try: # error handling
-                            input_process = int(input_process) # input from str to int
-                        except ValueError:
-                            print('Invalid input! Try again!')
-                            continue
-                        if input_process < 1 or input_process > len(found_processes): # check if selected process is within range of all found processes
-                            print(f'There is no process with number "{input_process}"!')
-                        elif found_processes[input_process - 1] in selected_processes: # check if process is already selected
-                            print(f'Process "{found_processes[input_process - 1]}" is already selected.')
-                        else: # otherwise add process to list of selected
-                            selected_processes.append(found_processes[input_process - 1])
-                            print(f'Process "{found_processes[input_process - 1]}" was selected.')                    
+                        input_numbers = input_to_numbers(input_process)
+                        for input_number in input_numbers:
+                            try: # error handling
+                                input_number = int(input_number) # input from str to int
+                            except ValueError:
+                                print(f'- Invalid input "{input_number}"! Try again!')
+                                continue
+                            if input_number < 1 or input_number > len(found_processes): # check if selected process is within range of all found processes
+                                print(f'- There is no process with number "{input_number}"!')
+                            elif found_processes[input_number - 1] in selected_processes: # check if process is already selected
+                                print(f'- Process "{found_processes[input_number - 1]}" is already selected.')
+                            else: # otherwise add process to list of selected
+                                selected_processes.append(found_processes[input_number - 1])
+                                print(f'- Process "{found_processes[input_number - 1]}" was selected.')                    
 
         # manual mode
         elif input_assign_mode == 'm' or input_assign_mode == 'M':
             os.system('clear||cls') # to clear the terminal
             running_processes = processes_list() # print all running processes and save them
             while True:
-                input_process = input('\nEnter process number to add it to selected, blank to continue: ')
+                input_process = input('\nEnter process numbers to select (separated by commas), blank to continue: ')
                 if input_process == '': # if blank exit manual mode
                     break
-                try: # error handling
-                    input_process = int(input_process) # input from str to int
-                except ValueError:
-                    print('Invalid input! Try again!')
-                    continue
-                if input_process < 1 or input_process > len(running_processes): # check if selected process is within range of all running processes
-                    print(f'There is no process with number "{input_process}"!')
-                elif running_processes[input_process - 1] in selected_processes: # check if process is already selected
-                    print(f'Process "{running_processes[input_process - 1]}" is already selected.')
-                else: # otherwise add process to list of selected
-                    selected_processes.append(running_processes[input_process - 1])
-                    print(f'Process "{running_processes[input_process - 1]}" was selected.')
+                input_numbers = input_to_numbers(input_process)
+                for input_number in input_numbers:
+                    try: # error handling
+                        input_number = int(input_number) # input from str to int
+                    except ValueError:
+                        print(f'- Invalid input "{input_number}"! Try again!')
+                        continue
+                    if input_number < 1 or input_number > len(running_processes): # check if selected process is within range of all running processes
+                        print(f'- There is no process with number "{input_number}"!')
+                    elif running_processes[input_number - 1] in selected_processes: # check if process is already selected
+                        print(f'- Process "{running_processes[input_number - 1]}" is already selected.')
+                    else: # otherwise add process to list of selected
+                        selected_processes.append(running_processes[input_number - 1])
+                        print(f'- Process "{running_processes[input_number - 1]}" was selected.')
         
         else:
             print('Invalid input! Try again!')
