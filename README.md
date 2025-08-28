@@ -44,9 +44,3 @@ Shortcuts are saved to `stored_shortcuts.json`.
 - Hotkeys must follow `pynput` syntax (`<ctrl>+<alt>+d`, etc.).
 - Hotkeys are global and may interfere with other applications.
 - Admin rights might be needed to kill some processes.
-
----
-
-## 📜 License
-
-Free to use. Customize and improve as you like!
